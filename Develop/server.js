@@ -14,16 +14,16 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//
-app.use('/api/notes', api);
 
 //the public folder will be static
 app.use(express.static('public'));
 
+//Main router
+app.use('/api', api);
 
 //Get route for homepage
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public'))
+    res.sendFile(path.join(__dirname, '/public/index.html'))
 });
 
 //route listens to the port in terminal
