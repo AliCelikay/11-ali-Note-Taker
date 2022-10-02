@@ -1,7 +1,6 @@
 //grabbing packages
 const express = require('express');
 const path = require('path');
-//
 const { v4: uuidv4 } = require('uuid');
 const { readAndAppend, readFromFile } = require('./helpers/fsUtils');
 //Backend index.js package
@@ -35,14 +34,20 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 });
 
-//
-app.get('/notes', (req, res) => {
+//why does this work when i put api, but i dont have an api route?
+app.get('/api/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/db/db.json' ))
 });
 
+//Get notes from db.json as an object
+app.get('/api/notes', (req, res) => {
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
+})
+
 //Post notes information
-app.post('/notes', (req, res) => {
-    console.log(`${req.method} method request recieved`);
+//why does this work when i put api, but i dont have an api route?
+app.post('/api/notes', (req, res) => {
+    // console.log(`${req.method} method request recieved`);
     //Destructing the object properties in req.body
     const { title, text } = req.body;
     
@@ -56,7 +61,7 @@ app.post('/notes', (req, res) => {
         }
         //reading and appending (some content, 'to file path')
         readAndAppend(newNote, './db/db.json');
-
+        
         //if all went well...
         const response = {
         status: 'success',
