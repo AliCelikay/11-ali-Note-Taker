@@ -2,7 +2,8 @@
 const express = require('express');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-const { readAndAppend, readFromFile } = require('./helpers/fsUtils');
+const { readAndAppend, readFromFile, writeToFile } = require('./helpers/fsUtils');
+const notesData = require('./db/db.json');
 //Backend index.js package
 // const api = require('./routes/index.js');
 
@@ -44,6 +45,31 @@ app.get('/api/notes', (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
 })
 
+app.get('/api/notes/:id', (req, res) => {
+    const requestedID = req.params.id;
+    for(let i = 0; i < notesData.length; i++)
+    {
+        if(requestedID === notesData[i].id)
+        {
+            return res.json(notesData[i]);
+        }
+    }
+})
+
+app.delete('/api/notes/:id', (req, res) => {
+    const requestedID = req.params.id;
+    let newDBArr = [];
+    for(let i = 0; i < notesData.length; i++)
+    {
+        if (requestedID !== notesData[i].id) {
+            newDBArr.push(notesData[i]);
+        }
+    }
+    writeToFile('./db/db.json', newDBArr)
+    //need to send a single res.json(with anything inside) in order for front end to execute a promise 
+    res.json(newDBArr);
+})
+
 //Post notes information
 //why does this work when i put api, but i dont have an api route?
 app.post('/api/notes', (req, res) => {
@@ -57,7 +83,7 @@ app.post('/api/notes', (req, res) => {
         const newNote = {
             title,
             text,
-            note_id: uuidv4(),
+            id: uuidv4(),
         }
         //reading and appending (some content, 'to file path')
         readAndAppend(newNote, './db/db.json');
