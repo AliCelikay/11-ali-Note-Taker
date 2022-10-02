@@ -1,9 +1,13 @@
-const notesRoute = require('express').Router();
-const path = require('path');
+// const router = require('express').Router();
+// const path = require('path');
 
-// GET Route for retrieving notes.html
-notesRoute.get('/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/notes.html'))
-});
+// // GET Route for retrieving notes.html
 
-module.exports = notesRoute;
+// router.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/index.html'))
+// });
+
+// router.get('/notes', (req, res) => {
+//   res.sendFile(path.join(__dirname, './public/notes.html'))
+// });
+// module.exports = router;

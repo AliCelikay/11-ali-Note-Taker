@@ -1,11 +1,12 @@
-const express = require('express');
+// const express = require('express');
 
-// Import our modular routers for html notes screen and 
-const notesRouter = require('./notesRouter.js');
+// // Import our modular routers for html notes screen and 
+// const notesRouter = require('./notesRouter.js');
 
-const app = express();
+// const app = express();
 
-//Initializing notes.html route
-app.use('/notes', notesRouter);
+// //Initializing notes.html route
+// app.use('/notes', notesRouter);
 
-module.exports = app;
+// module.exports = app;
+

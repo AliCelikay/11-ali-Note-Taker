@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 //Backend index.js package
 const api = require('./routes/index.js');
+// const notesRouter = require('./routes/notesRouter.js');
 
 //creating a ports, 1 for heroku and one preset port
 const PORT = process.env.PORT || 3001;
@@ -19,12 +20,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 //Main router
-app.use('/api', api);
+// app.use('/api', api);
 
 //Get route for homepage
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
 });
+
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'))
+  });
 
 //route listens to the port in terminal
 app.listen(PORT, () => {
